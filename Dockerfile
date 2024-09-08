@@ -1,6 +1,7 @@
-FROM php:8.3-cli
+# Base image
+FROM php:8.3-fpm
 
-# Dependencies
+# Install dependencies
 RUN apt-get update \
     && apt-get install -y \
         git \
@@ -14,21 +15,27 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# PHP Extensions
+# Install PHP extensions
 COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
 RUN install-php-extensions \
     bcmath \
+    ctype \
+    iconv \
+    pcre \
+    session \
+    simplexml \
+    tokenizer \
     gd \
     intl \
     pdo_pgsql \
     zip
 
-# Composer
+# Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
-# Symfony CLI
+# Install Symfony CLI
 RUN wget https://get.symfony.com/cli/installer -O - | bash \
     && mv /root/.symfony*/bin/symfony /usr/local/bin/symfony
 
-# Working directory
+# Set the working directory
 WORKDIR /workspace
