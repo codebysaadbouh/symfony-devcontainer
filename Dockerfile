@@ -37,5 +37,8 @@ COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 RUN wget https://get.symfony.com/cli/installer -O - | bash \
     && mv /root/.symfony*/bin/symfony /usr/local/bin/symfony
 
+# Add opcache.ini to the PHP configuration
+ADD opcache.ini $PHP_INI_DIR/conf.d/
+
 # Set the working directory
-WORKDIR /workspace
+WORKDIR /www
