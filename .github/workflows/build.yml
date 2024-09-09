@@ -26,5 +26,5 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: true
-          tags: saadbouhcode/symfony-devcontainer:latest
+          tags: saadbouhcode/php8.3-symfony-custom:latest
           platforms: linux/amd64,linux/arm64
